@@ -9,7 +9,7 @@ interface EasingFunctionData {
 	readonly name: string;
 }
 
-const limitToTwo = createSetSizeLimiter(2);
+const limitToFive = createSetSizeLimiter(5);
 
 const ITEMS: ReadonlyArray<EasingFunctionData> = mapFiltered(
 	Object.entries(EasingFunctions),
@@ -51,7 +51,7 @@ export function EasingSelectionNoMemo({
 					() => console.warn(`Skipping ${key} (could not cast)`),
 				);
 
-			onSelectionChanged(limitToTwo(selection));
+			onSelectionChanged(limitToFive(selection));
 		},
 		[onSelectionChanged],
 	);

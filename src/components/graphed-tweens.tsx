@@ -1,9 +1,14 @@
 import React, { useMemo } from "react";
 import EasingFunctions from "../meta/easing-functions";
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts";
 import { createEasingData, type EasingData } from "../utilities/create-easing-data";
-import { Tooltip } from "@nextui-org/react";
 import getRandomColor from "../utilities/get-random-color";
+import type { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
+import format from "../utilities/format";
+
+function formatter(value: number, name: string) {
+	return [format("%.2f", value), name];
+}
 
 interface GraphData {
 	readonly easingData: EasingData;
@@ -78,7 +83,12 @@ export function GraphedTweensNoMemo({ easingFunctions }: GraphedTweensProperties
 					strokeWidth={1}
 					type="number"
 				/>
-				<Tooltip key="Tooltip" />
+				<Tooltip
+					contentStyle={{ backgroundColor: "Background", color: "black" }}
+					formatter={formatter}
+					key="Tooltip"
+					labelStyle={{ color: "MenuText" }}
+				/>
 				{children}
 			</LineChart>
 		</ResponsiveContainer>
