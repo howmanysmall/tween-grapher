@@ -29,16 +29,3 @@ export function createEasingData(easingFunction: EasingFunctions): EasingData {
 
 	return easingData;
 }
-
-export function combineEasingFunctions(easingFunction0: EasingFunctions, easingFunction1: EasingFunctions) {
-	const name0 = EasingFunctions[easingFunction0];
-	const name1 = EasingFunctions[easingFunction1];
-
-	const combinedEasingData: CombinedEasingData = Array.from({ length: 200 });
-	let index = 0;
-
-	for (const { x, y } of createEasingData(easingFunction0)) combinedEasingData[index++] = { name: name0, x, y };
-	for (const { x, y } of createEasingData(easingFunction1)) combinedEasingData[index++] = { name: name1, x, y };
-
-	return combinedEasingData;
-}

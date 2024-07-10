@@ -31,7 +31,6 @@ export function GraphedTweensNoMemo({ easingFunctions }: GraphedTweensProperties
 	}, [easingFunctions]);
 
 	const colorMap = useColorMap(easingFunctions);
-
 	const children = useMemo(
 		() =>
 			graphData.map(({ easingData, easingFunction }) => (
@@ -54,7 +53,7 @@ export function GraphedTweensNoMemo({ easingFunctions }: GraphedTweensProperties
 		<ResponsiveContainer height="100%" width="100%">
 			<LineChart height={300} key="LineChart" margin={{ bottom: 5, left: 20, right: 30, top: 5 }} width={500}>
 				<CartesianGrid key="Grid" strokeDasharray="3 3" />
-				<Legend height={36} k1="Legend" key="Legend" verticalAlign="top" />
+				<Legend height={36} key="Legend" verticalAlign="top" />
 				<YAxis
 					allowDataOverflow
 					dataKey="y"
@@ -88,7 +87,7 @@ export function GraphedTweensNoMemo({ easingFunctions }: GraphedTweensProperties
 					contentStyle={{ backgroundColor: "Background", border: "Border" }}
 					formatter={formatter}
 					key="Tooltip"
-					labelStyle={{ color: "MenuText" }}
+					labelClassName="text-foreground"
 				/>
 				{children}
 			</LineChart>
