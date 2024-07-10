@@ -1,4 +1,4 @@
-const PHI_CONJ = (Math.sqrt(5) - 1) / 2;
+const PHI_CONJUGATE = (Math.sqrt(5) - 1) / 2;
 let hue = Math.random();
 
 function hexFromHsv(hue: number, saturation: number, value: number) {
@@ -29,6 +29,6 @@ function hexFromHsv(hue: number, saturation: number, value: number) {
 }
 
 export default function getRandomColor(saturation = 0.5, value = 0.95) {
-	hue = (hue + PHI_CONJ) % 1;
+	hue = (hue + PHI_CONJUGATE) % 1;
 	return hexFromHsv(hue, saturation, value);
 }

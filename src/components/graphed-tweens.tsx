@@ -2,9 +2,8 @@ import React, { useMemo } from "react";
 import EasingFunctions from "../meta/easing-functions";
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts";
 import { createEasingData, type EasingData } from "../utilities/create-easing-data";
-import getRandomColor from "../utilities/get-random-color";
-import type { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 import format from "../utilities/format";
+import useColorMap from "../hooks/use-color-map";
 
 function formatter(value: number, name: string) {
 	return [format("%.2f", value), name];
@@ -31,6 +30,8 @@ export function GraphedTweensNoMemo({ easingFunctions }: GraphedTweensProperties
 		return graphData;
 	}, [easingFunctions]);
 
+	const colorMap = useColorMap(easingFunctions);
+
 	const children = useMemo(
 		() =>
 			graphData.map(({ easingData, easingFunction }) => (
@@ -41,12 +42,12 @@ export function GraphedTweensNoMemo({ easingFunctions }: GraphedTweensProperties
 					key={`Line-${easingFunction}`}
 					label={easingFunction}
 					name={easingFunction}
-					stroke={getRandomColor(0.8, 0.95)}
+					stroke={colorMap[easingFunction]}
 					strokeWidth={2}
 					type="monotone"
 				/>
 			)),
-		[graphData],
+		[colorMap, graphData],
 	);
 
 	return (
@@ -84,7 +85,7 @@ export function GraphedTweensNoMemo({ easingFunctions }: GraphedTweensProperties
 					type="number"
 				/>
 				<Tooltip
-					contentStyle={{ backgroundColor: "Background", color: "black" }}
+					contentStyle={{ backgroundColor: "Background", border: "Border" }}
 					formatter={formatter}
 					key="Tooltip"
 					labelStyle={{ color: "MenuText" }}

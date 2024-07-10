@@ -4,7 +4,7 @@ import type { Token } from "./types";
 const TOKEN_RULE =
 	/(?:%(?<flag>([+0-]|-\+))?(?<width>\d+)?(?<position>\d+\$)?(?<precision>\.\d+)?(?<conversion>[%BCESXb-joqsux]))|(\\%)/g;
 
-export default function tokenize(subject: string): Array<Token> {
+export default function tokenize(subject: string): ReadonlyArray<Token> {
 	const tokens = new Array<Token>();
 	let matchResult: RegExpExecArray | undefined;
 	let argumentIndex = 0;

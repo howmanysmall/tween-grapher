@@ -85,9 +85,10 @@ function addQuoted(value: string) {
 export default function createFormat(configuration?: Configuration): Format {
 	const formatUnboundExpression = configuration?.formatUnboundExpression ?? formatDefaultUnboundExpression;
 
-	const cache: Record<string, Array<Token>> = {}; // eslint-disable-next-line complexity
+	const cache: Record<string, ReadonlyArray<Token>> = {}; // eslint-disable-next-line complexity
 
-	return (subject: string, ...boundValues: Array<any>): string => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	return (subject: string, ...boundValues: ReadonlyArray<any>): string => {
 		let tokens = cache[subject];
 		if (!tokens) tokens = cache[subject] = tokenize(subject);
 

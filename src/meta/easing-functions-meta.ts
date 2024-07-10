@@ -3,6 +3,7 @@ import EasingFunctions from "./easing-functions";
 
 const PI = Math.PI;
 const HALF_PI = PI / 2;
+const TAU = 2 * PI;
 
 function outBounce(alpha: number) {
 	if (alpha < 0.363_636_363_636_36) return 7.5625 * alpha * alpha;
@@ -24,11 +25,11 @@ function inBounce(alpha: number) {
 
 function inElastic(alpha: number) {
 	if (alpha === 0 || alpha === 1) return alpha;
-	return -(2 ** (10 * alpha - 10)) * Math.sin((alpha * 10 - 10.75) * ((2 * PI) / 3));
+	return -(2 ** (10 * alpha - 10)) * Math.sin((alpha * 10 - 10.75) * (TAU / 3));
 }
-function outElastic(x: number) {
-	if (x === 0 || x === 1) return x;
-	return 2 ** (-10 * x) * Math.sin((x * 10 - 0.75) * ((2 * PI) / 3)) + 1;
+function outElastic(alpha: number) {
+	if (alpha === 0 || alpha === 1) return alpha;
+	return 2 ** (-10 * alpha) * Math.sin((alpha * 10 - 0.75) * (TAU / 3)) + 1;
 }
 
 export const EasingFunctionsMeta: { [easingFunction in EasingFunctions]: EasingFunction } = {
@@ -59,11 +60,9 @@ export const EasingFunctionsMeta: { [easingFunction in EasingFunctions]: EasingF
 		alpha < 0.5 ? 4 * alpha * alpha * alpha : 1 + 4 * (alpha - 1) * (alpha - 1) * (alpha - 1),
 	[EasingFunctions.InOutElastic]: (alpha) => {
 		if (alpha === 0 || alpha === 1) return alpha;
-
-		const c5 = (2 * PI) / 4.5;
 		return alpha < 0.5
-			? -(2 ** (20 * alpha - 10) * Math.sin((20 * alpha - 11.125) * c5)) / 2
-			: (2 ** (-20 * alpha + 10) * Math.sin((20 * alpha - 11.125) * c5)) / 2 + 1;
+			? -(2 ** (20 * alpha - 10) * Math.sin((20 * alpha - 11.125) * (TAU / 4.5))) / 2
+			: (2 ** (-20 * alpha + 10) * Math.sin((20 * alpha - 11.125) * (TAU / 4.5))) / 2 + 1;
 	},
 	[EasingFunctions.InOutExpo]: (alpha) =>
 		alpha < 0.5
@@ -173,8 +172,8 @@ export const EasingFunctionsMeta: { [easingFunction in EasingFunctions]: EasingF
 		alpha < 0.5 ? Math.sin(alpha * PI) / 2 : (1 - Math.cos((alpha * 2 - 1) * HALF_PI)) / 2 + 0.5,
 	[EasingFunctions.OutQuad]: (alpha) => alpha * (2 - alpha),
 	[EasingFunctions.OutQuart]: (alpha) => (4 - alpha) * (alpha * alpha * alpha) + alpha * (4 + alpha * -6),
-	[EasingFunctions.OutQuint]: (alpha) => (1 - alpha) ** 5 + 1,
-	[EasingFunctions.OutSine]: (alpha) => Math.sin(alpha * HALF_PI),
+	[EasingFunctions.OutQuint]: (alpha) => 1 - (1 - alpha) ** 5,
+	[EasingFunctions.OutSine]: (alpha) => Math.sin((alpha * PI) / 2),
 	[EasingFunctions.RevBack]: (alpha) => {
 		const newAlpha = 1 - alpha;
 		return 1 - (Math.sin(newAlpha * HALF_PI) + (Math.sin(newAlpha * PI) * (Math.cos(newAlpha * PI) + 1)) / 2);

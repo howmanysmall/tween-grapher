@@ -1,8 +1,9 @@
 import React, { useCallback } from "react";
 import EasingFunctions, { castToEasingFunction } from "../meta/easing-functions";
 import mapFiltered from "../utilities/map-filtered";
-import { SelectItem, Select, type SelectedItems, Chip, type Selection } from "@nextui-org/react";
+import { SelectItem, Select, type SelectedItems, type Selection } from "@nextui-org/react";
 import { createSetSizeLimiter } from "../utilities/limit-set-size";
+import RemovableChip from "./removable-chip";
 
 interface EasingFunctionData {
 	readonly easingFunction: EasingFunctions;
@@ -29,7 +30,9 @@ export function EasingSelectionNoMemo({
 		(items: SelectedItems<EasingFunctionData>) => (
 			<div className="flex flex-wrap gap-2" key="RenderedItems">
 				{items.map((item) => (
-					<Chip key={item.key}>{item.data!.name}</Chip>
+					<RemovableChip easingFunction={item.data!.easingFunction} key={item.key}>
+						{item.data!.name}
+					</RemovableChip>
 				))}
 			</div>
 		),
@@ -45,11 +48,12 @@ export function EasingSelectionNoMemo({
 			}
 
 			const selection = new Set<EasingFunctions>();
+			function add(easingFunction: EasingFunctions) {
+				selection.add(easingFunction);
+			}
+
 			for (const key of keys)
-				castToEasingFunction(key).match(
-					(easingFunction) => selection.add(easingFunction),
-					() => console.warn(`Skipping ${key} (could not cast)`),
-				);
+				castToEasingFunction(key).match(add, () => console.warn(`Skipping ${key} (could not cast)`));
 
 			onSelectionChanged(limitToFive(selection));
 		},
