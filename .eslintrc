@@ -1,0 +1,61 @@
+{
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"jsx": true,
+		"useJSXTextNode": true,
+		"ecmaVersion": 2020,
+		"sourceType": "module",
+		"project": "./tsconfig.app.json"
+	},
+
+	"env": {
+		"browser": true,
+		"es2020": true
+	},
+
+	"root": true,
+	"ignorePatterns": ["/out"],
+	"plugins": [
+		"@typescript-eslint",
+		"prettier",
+		"react-hooks",
+		"react-refresh",
+		"unicorn",
+		"perfectionist"
+	],
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:prettier/recommended",
+		"plugin:react-hooks/recommended",
+		"plugin:unicorn/recommended",
+		"plugin:perfectionist/recommended-natural"
+	],
+	"rules": {
+		"prettier/prettier": [
+			"warn",
+			{
+				"semi": true,
+				"trailingComma": "all",
+				"singleQuote": false,
+				"printWidth": 120,
+				"tabWidth": 4,
+				"useTabs": true,
+				"endOfLine": "auto"
+			}
+		],
+
+		"react-refresh/only-export-components": ["warn", { "allowConstantExport": true }],
+		"perfectionist/sort-objects": [
+			"error",
+			{
+				"type": "natural",
+				"order": "asc"
+			}
+		],
+		"perfectionist/sort-named-imports": "off",
+		"perfectionist/sort-imports": "off",
+		"perfectionist/sort-classes": "off",
+		"unicorn/no-nested-ternary": "off"
+	}
+}
